@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mysqlserver:
+    image: mysql:5.7.34
+    container_name: triplet-db
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=triplet
+      - MYSQL_PASSWORD=triplet
+      - MYSQL_DATABASE=tripletclothes
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_config:/etc/mysql/conf.d
+    networks:
+      - test-triplet
+
+  triplet-app:
+    build:
+      context: .
+    image: spring-ecommerce
+    container_name: triplet-service
+    ports:
+      - 8080:8080
+      - 8000:8000
+    depends_on:
+      - mysqlserver
+    environment:
+      - APP_ENV=${APP_ENV}
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./:/app
+    networks:
+      - test-triplet
+
+volumes:
+  mysql_data:
+  mysql_config:
+
+networks:
+  test-triplet:
