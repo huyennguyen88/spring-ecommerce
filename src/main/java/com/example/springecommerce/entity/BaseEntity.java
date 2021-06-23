@@ -47,4 +47,5 @@ public class BaseEntity implements Serializable {
     public void setDelete_time(Date delete_time) {
         this.delete_time = delete_time;
     }
+
 }
