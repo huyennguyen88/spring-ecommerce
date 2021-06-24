@@ -21,6 +21,10 @@ public class UserDTO extends AbstractDTO<User> {
         this.phone = user.getPhone();
     }
 
+    public UserDTO() {
+
+    }
+
     public String getFullname() {
         return fullname;
     }

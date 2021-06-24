@@ -4,6 +4,8 @@ import com.example.springecommerce.dto.PageDTO;
 import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.entity.User;
 import com.example.springecommerce.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.ehcache.shadow.org.terracotta.offheapstore.paging.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @ApiOperation(value = "Get all User",response = PageDTO.class)
     @GetMapping("/all")
     public ResponseEntity<PageDTO> index(@RequestParam("page") int page, @RequestParam("size") int size) {
         PageDTO pageDTO = new PageDTO();
@@ -33,11 +36,15 @@ public class UserController {
         pageDTO.setTotalPage((int) Math.ceil((double) (userService.getSize()) / size));
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
     }
-
+    @ApiOperation(value = "Get one User by id", response = UserDTO.class)
     @GetMapping("/{id}")
     public ResponseEntity<Object> show(@PathVariable int id) {
-        Optional<User> user = userService.findById(id);
-        if(user.isPresent()) return new ResponseEntity<>(user, HttpStatus.OK);
+        Optional<User> optionalUser = userService.findById(id);
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            UserDTO userDTO = new UserDTO(user);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        }
         return new ResponseEntity<> (HttpStatus.NOT_FOUND);
     }
 
