@@ -3,6 +3,7 @@ package com.example.springecommerce.dto;
 import com.example.springecommerce.entity.User;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 public class UserDTO extends AbstractDTO<User> {
     private String fullname;

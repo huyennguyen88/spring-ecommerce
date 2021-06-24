@@ -11,5 +11,5 @@ public interface UserService {
     Optional<User> findById(int id);
     List<UserDTO> findAll(Pageable pageable);
     int getSize();
-
+    boolean delete(int id);
 }
