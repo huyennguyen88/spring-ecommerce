@@ -1,4 +1,4 @@
-CREATE TABLE Products (
+CREATE TABLE products (
 	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(255) NOT NULL,
 	description TEXT,
@@ -10,5 +10,5 @@ CREATE TABLE Products (
     update_time timestamp default current_timestamp on update current_timestamp,
     delete_time timestamp null,
 	PRIMARY KEY (id),
-	FOREIGN KEY (category_id) REFERENCES Categories(id)
+	FOREIGN KEY (category_id) REFERENCES categories(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;

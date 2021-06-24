@@ -1,4 +1,4 @@
-INSERT INTO Categories (name, parent_id) VALUES
+INSERT INTO categories (name, parent_id) VALUES
 ('Trang phục nam',null),
 ('Trang phục nữ',null),
 ('Áo nam',1),
