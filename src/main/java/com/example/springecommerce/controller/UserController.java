@@ -1,14 +1,11 @@
-package com.example.springecommerce.api;
+package com.example.springecommerce.controller;
 
 import com.example.springecommerce.dto.PageDTO;
 import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.entity.User;
+import com.example.springecommerce.form.UserForm;
 import com.example.springecommerce.service.UserService;
-import com.example.springecommerce.service.impl.UserServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
-import org.ehcache.shadow.org.terracotta.offheapstore.paging.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,11 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v2/users")
+@RequestMapping("/users")
 public class UserController {
 
     private static final Logger logger = Logger.getLogger(UserController.class);
@@ -63,4 +61,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<UserDTO> update(@PathVariable(value = "id") int user_id, @Valid @RequestBody UserForm.Update form) {
+        ResponseEntity<UserDTO> responseEntity = userService.update(user_id, form);
+        return responseEntity;
+    }
 }

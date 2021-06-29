@@ -66,16 +66,4 @@ public class Category {
         this.products = products;
     }
 
-    public List<Category> getAllLeafNodes() {
-        List<Category> leafNodes = new ArrayList<>();
-        if (this.children.isEmpty()) {
-            leafNodes.add(this);
-        } else {
-            for (Category child : this.children) {
-                leafNodes.addAll(child.getAllLeafNodes());
-            }
-        }
-        return leafNodes;
-    }
-
 }

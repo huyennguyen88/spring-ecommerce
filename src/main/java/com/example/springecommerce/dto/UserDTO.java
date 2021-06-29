@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import java.util.Date;
 
 public class UserDTO extends AbstractDTO<User> {
+    private int id;
     private String fullname;
     private String username;
     private String email;
@@ -14,6 +15,7 @@ public class UserDTO extends AbstractDTO<User> {
     private String address;
 
     public UserDTO(User user) {
+        this.id = user.getId();
         this.fullname = user.getFullname();
         this.username = user.getUsername();
         this.address = user.getAddress();
@@ -72,5 +74,13 @@ public class UserDTO extends AbstractDTO<User> {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

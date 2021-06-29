@@ -2,10 +2,12 @@ package com.example.springecommerce.service.impl;
 
 import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.entity.User;
+import com.example.springecommerce.form.UserForm;
 import com.example.springecommerce.service.UserService;
-import com.example.springecommerce.utils.DateTimeUtils;
 import org.apache.log4j.Logger;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -61,12 +63,33 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 Date now = new Date();
                 user.setDelete_time(now);
                 getUserRepository().save(user);
-                logger.info("delete user: "+user.getDelete_time());
                 return true;
             }
             return false;
         } catch (Exception e) {
             logger.error("Error deleting user");
+            throw (e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<UserDTO> update(int user_id, UserForm.Update userForm) {
+        Optional<User> optional = getUserRepository().findById(user_id);
+        if(optional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        try {
+            User user = optional.get();
+            user.setFullname(userForm.getFullname());
+            user.setAddress(userForm.getAddress());
+            user.setAvatar(userForm.getAvatar());
+            user.setPhone(userForm.getPhone());
+            User updatedUser = getUserRepository().save(user);
+            UserDTO userDTO = new UserDTO(updatedUser);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error("Error update user");
             throw (e);
         }
     }

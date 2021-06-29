@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<!-- banner home-->
+<div th:fragment="banner-home" class="banner-text">
+    <div class="callbacks_container">
+        <ul class="rslides" id="slider3">
+            <li class="banner">
+                <div class="container">
+                    <h3 class="agile_btxt">
+                        <span>f</span>ashion
+                        <span>h</span>ub
+                    </h3>
+                    <h4 class="w3_bbot" th:text="#{exclusive}"></h4>
+                    <div class="slider-info mt-sm-5">
+                        <h4 class="bn_right">
+                            <span>w</span>omen's
+                            <span>f</span>ashion
+                        </h4>
+                        <div class="bnr_clip position-relative">
+                            <div class="row">
+                                <h4 th:text="#{getup}">
+                                </h4>
+                                <h4><span class="px-2">45% </span></h4>
+                            </div>
+                            <div class="d-inline-flex flex-column banner-pos position-absolute text-center">
+                                <div class="bg-flex-item">
+                                    <span>O</span>
+                                </div>
+                                <div class="bg-flex-item">
+                                    <span>F</span>
+                                </div>
+                                <div class="bg-flex-item">
+                                        <span>F
+                                        </span>
+                                </div>
+                            </div>
+                            <p class="text-uppercase py-2" th:text="#{onsale}"></p>
+                            <a class="btn btn-primary mt-3 text-capitalize" th:href="@{/categories/2/products}"
+                               role="button" th:text="#{shopnow}"></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="banner banner2">
+                <div class="container">
+                    <h3 class="agile_btxt">
+                        <span>f</span>ashion
+                        <span>h</span>ub
+                    </h3>
+                    <h4 class="w3_bbot" th:text="#{exclusive}"></h4>
+                    <div class="slider-info mt-sm-5">
+                        <h4 class="bn_right">
+                            <span>m</span>en's
+                            <span>f</span>ashion
+                        </h4>
+                        <div class="bnr_clip position-relative">
+                            <div class="row">
+                                <h4 th:text="#{getup}">
+                                </h4>
+                                <h4><span class="px-2">35% </span></h4>
+                            </div>
+
+                            <div class="d-inline-flex flex-column banner-pos position-absolute text-center">
+                                <div class="bg-flex-item">
+                                    <span>O</span>
+                                </div>
+                                <div class="bg-flex-item">
+                                    <span>F</span>
+                                </div>
+                                <div class="bg-flex-item">
+                                        <span>F
+                                        </span>
+                                </div>
+                            </div>
+                            <p class="text-uppercase py-2" th:text="#{onsale}"></p>
+                            <a class="btn btn-primary mt-3 text-capitalize" th:href="@{/categories/1/products}"
+                               role="button" th:text="#{shopnow}"></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- //banner home -->
+</body>
+
+</html>

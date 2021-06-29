@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<!-- footer -->
+<div th:fragment="footer" class="footerv2-w3ls">
+    <div class="footer-w3lagile-innerr">
+        <div class="footer-bottomv2 py-5">
+            <div class="container">
+                <ul class="bottom-links-agile">
+                    <li><a th:href="@{/}" th:text="#{home}"></a></li>
+                    <li><a th:href="@{/about}" th:text="#{about}"></a></li>
+                    <li><a th:href="@{/contact}" th:text="#{contact}"></a></li>
+
+                </ul>
+                <h3 class="text-center follow" th:text="#{follow}"></h3>
+                <ul class="social-iconsv2 agileinfo">
+                    <li><a th:href="@{https://www.facebook.com/huyennguyen88}"> <i class="fab fa-facebook-f"></i>
+                    </a></li>
+                    <li><a th:href="@{https://twitter.com/judyhuyen}"> <i class="fab fa-twitter"></i>
+                    </a></li>
+                    <li><a th:href="@{https://www.youtube.com/channel/UCR2SmsiAdTygSK9Rxw3MOjA}"> <i
+                            class="fab fa-youtube"></i>
+                    </a></li>
+                    <li><a th:href="@{https://www.linkedin.com/in/huyen-nguyen-b26114109}"> <i
+                            class="fab fa-linkedin-in"></i>
+                    </a></li>
+                    <li><a th:href="@{https://www.google.com}"> <i class="fab fa-google-plus-g"></i>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-5 footer-copy_w3ls">
+        <div class="d-lg-flex justify-content-between">
+            <div class="mt-2 sub-some align-self-lg-center">
+                <h5 th:text="#{paymethod}"></h5>
+                <ul class="mt-4">
+                    <li class="list-inline-item"><img th:src="@{/resources/images/pay2.png}" alt=""></li>
+                    <li class="list-inline-item"><img th:src="@{/resources/images/pay5.png}" alt=""></li>
+                    <li class="list-inline-item"><img th:src="@{/resources/images/pay3.png}" alt=""></li>
+                    <li class="list-inline-item"><img th:src="@{/resources/images/pay7.png}" alt=""></li>
+                    <li class="list-inline-item"><img th:src="@{/resources/images/pay8.png}" alt=""></li>
+                    <li class="list-inline-item"><img th:src="@{/resources/images/pay9.png}" alt=""></li>
+                </ul>
+            </div>
+            <div class="cpy-right align-self-center">
+                <h2 class="agile_btxt">
+                    <a th:href="@{/}">
+                        <span>t</span>ipplet
+                        <span>c</span>lothes
+                    </a>
+                </h2>
+                <p>
+                    2018 Fashion Hub. All rights reserved | Design by <a th:href="@{http://w3layouts.com}"
+                                                                         class="text-secondary"> W3layouts.</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //footer -->
+</body>
+
+</html>

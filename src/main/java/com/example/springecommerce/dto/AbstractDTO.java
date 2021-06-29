@@ -8,6 +8,6 @@ public class AbstractDTO<T> {
     private int id;
     private Date create_time;
     private Date update_time;
-    private List<T> listResult = new ArrayList<>();
+    private final List<T> listResult = new ArrayList<>();
 
 }

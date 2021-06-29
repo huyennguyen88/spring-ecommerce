@@ -1,4 +1,4 @@
-package com.example.springecommerce;
+package com.example.springecommerce.config;
 
 import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;
