@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -60,8 +61,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             Optional<User> optionalUser = getUserRepository().findById(id);
             if(optionalUser.isPresent() && !isDeleted(optionalUser.get())) {
                 User user = optionalUser.get();
-                Date now = new Date();
-                user.setDelete_time(now);
+                user.setDelete_time(LocalDateTime.now());
                 getUserRepository().save(user);
                 return true;
             }

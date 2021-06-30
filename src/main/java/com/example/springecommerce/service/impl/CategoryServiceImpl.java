@@ -29,13 +29,4 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
         return false;
     }
 
-    @Override
-    public List<Category> getRoots() {
-        try {
-            return getCategoryRepository().getRoots();
-        } catch (Exception e) {
-            logger.error("Error get roots ", e);
-            return Collections.emptyList();
-        }
-    }
 }

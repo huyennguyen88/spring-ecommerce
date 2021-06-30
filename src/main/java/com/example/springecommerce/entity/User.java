@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -36,18 +37,15 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "create_time", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date create_time;
+    private LocalDateTime create_time;
 
     @Column(name = "update_time")
-    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
-    private Date update_time;
+    private LocalDateTime update_time;
 
     @Column(name = "delete_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date delete_time;
+    private LocalDateTime delete_time;
 
     public int getId() {
         return id;
@@ -113,27 +111,27 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Date getDelete_time() {
-        return delete_time;
-    }
-
-    public void setDelete_time(Date delete_time) {
-        this.delete_time = delete_time;
-    }
-
-    public Date getCreate_time() {
+    public LocalDateTime getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(Date create_time) {
+    public void setCreate_time(LocalDateTime create_time) {
         this.create_time = create_time;
     }
 
-    public Date getUpdate_time() {
+    public LocalDateTime getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(Date update_time) {
+    public void setUpdate_time(LocalDateTime update_time) {
         this.update_time = update_time;
+    }
+
+    public LocalDateTime getDelete_time() {
+        return delete_time;
+    }
+
+    public void setDelete_time(LocalDateTime delete_time) {
+        this.delete_time = delete_time;
     }
 }

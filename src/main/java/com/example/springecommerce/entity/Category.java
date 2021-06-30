@@ -1,9 +1,11 @@
 package com.example.springecommerce.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -16,15 +18,22 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Category parent;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
-    private List<Category> children;
+    private List<CategoryDetail> categoryDetails;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> products;
+
+    @Column(name = "create_time", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime create_time;
+
+    @Column(name = "update_time")
+    @UpdateTimestamp
+    private LocalDateTime update_time;
+
+    @Column(name = "delete_time")
+    private LocalDateTime delete_time;
 
     public int getId() {
         return id;
@@ -42,20 +51,12 @@ public class Category {
         this.name = name;
     }
 
-    public Category getParent() {
-        return parent;
+    public List<CategoryDetail> getCategoryDetails() {
+        return categoryDetails;
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
-
-    public List<Category> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Category> children) {
-        this.children = children;
+    public void setCategoryDetails(List<CategoryDetail> categoryDetails) {
+        this.categoryDetails = categoryDetails;
     }
 
     public List<Product> getProducts() {
@@ -66,4 +67,27 @@ public class Category {
         this.products = products;
     }
 
+    public LocalDateTime getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(LocalDateTime create_time) {
+        this.create_time = create_time;
+    }
+
+    public LocalDateTime getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(LocalDateTime update_time) {
+        this.update_time = update_time;
+    }
+
+    public LocalDateTime getDelete_time() {
+        return delete_time;
+    }
+
+    public void setDelete_time(LocalDateTime delete_time) {
+        this.delete_time = delete_time;
+    }
 }

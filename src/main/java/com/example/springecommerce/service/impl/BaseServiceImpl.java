@@ -1,5 +1,6 @@
 package com.example.springecommerce.service.impl;
 
+import com.example.springecommerce.repository.CategoryDetailRepository;
 import com.example.springecommerce.repository.CategoryRepository;
 import com.example.springecommerce.repository.ProductRepository;
 import com.example.springecommerce.repository.UserRepository;
@@ -14,6 +15,9 @@ public class BaseServiceImpl {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryDetailRepository categoryDetailRepository;
 
     public UserRepository getUserRepository() {
         return userRepository;
@@ -37,5 +41,13 @@ public class BaseServiceImpl {
 
     public void setCategoryRepository(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
+    }
+
+    public CategoryDetailRepository getCategoryDetailRepository() {
+        return categoryDetailRepository;
+    }
+
+    public void setCategoryDetailRepository(CategoryDetailRepository categoryDetailRepository) {
+        this.categoryDetailRepository = categoryDetailRepository;
     }
 }
