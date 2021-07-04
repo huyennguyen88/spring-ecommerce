@@ -3,11 +3,12 @@ package com.example.springecommerce.dto.response;
 import com.example.springecommerce.entity.Category;
 import com.example.springecommerce.entity.CategoryDetail;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CategoryResDto {
+public class CategoryResDto implements Serializable {
     private int id;
     private String name;
     private List<CategoryResDto> children;

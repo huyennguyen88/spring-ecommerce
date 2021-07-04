@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout.html}">
+
+<head>
+    <title>Register</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div th:replace="fragments/banner/banner-shared :: banner-shared"></div>
+    <!-- sign up Modal -->
+    <div id="signupContent">
+        <div class="agilemodal-dialog modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{register}"></h5>
+                </div>
+                <div class="modal-body pt-3 pb-5 px-sm-5">
+                    <div class="row">
+                        <div class="col-md-6 mx-auto align-self-center">
+                            <img th:src="@{/resources/images/p3.png}" class="img-fluid" alt="login_image" />
+                        </div>
+                        <div class="col-md-6">
+                            <form th:action="@{/register-process}" method="post" th:object="${userForm}">
+                                <div class="form-group">
+                                    <label class="col-form-label" th:text="#{fullname}"></label>
+                                    <input th:field="*{fullname}" type="text" class="form-control" name="fullname">
+                                    <label th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Fullname Error</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" th:text="#{username}"></label>
+                                    <input th:field="*{username}" type="text" class="form-control" name="username" required>
+                                    <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-email" class="col-form-label">Email</label>
+                                    <input th:field="*{email}" type="email"
+                                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control"
+                                           name="email" id="recipient-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password1" class="col-form-label" th:text="#{password}"></label>
+                                    <input th:field="*{password}" type="password" class="form-control"
+                                           name="password" id="password1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password2" class="col-form-label" th:text="#{confirm}"></label>
+                                    <input th:field="*{confirmPassword}" name="confirmPassword" type="password"
+                                           class="form-control" placeholder=" " id="password2" required>
+                                </div>
+                                <div class="sub-w3l">
+                                    <div class="sub-agile">
+                                        <input type="checkbox" id="brand2" value="" required>
+                                        <label for="brand2" class="mb-3" th:text="#{accept}">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="right-w3l">
+                                    <input type="submit" class="form-control" value="Register">
+                                </div>
+                                <p class="text-center mt-3" th:text="#{already}">
+                                    <a th:href="@{/login-page}" class="text-dark login_btn" th:text="#{login}"></a>
+                                </p>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //signup modal -->
+</section>
+</body>
+
+</html>

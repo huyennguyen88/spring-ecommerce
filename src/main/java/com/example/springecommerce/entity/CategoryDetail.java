@@ -1,10 +1,11 @@
 package com.example.springecommerce.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "category_details")
-public class CategoryDetail {
+public class CategoryDetail implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

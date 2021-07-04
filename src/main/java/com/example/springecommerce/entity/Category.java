@@ -4,12 +4,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,16 +25,16 @@ public class Category {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> products;
 
-    @Column(name = "create_time", updatable = false)
+    @Column(name = "created_date", updatable = false)
     @CreationTimestamp
-    private LocalDateTime create_time;
+    private LocalDateTime createdDate;
 
-    @Column(name = "update_time")
+    @Column(name = "updated_date")
     @UpdateTimestamp
-    private LocalDateTime update_time;
+    private LocalDateTime updatedDate;
 
-    @Column(name = "delete_time")
-    private LocalDateTime delete_time;
+    @Column(name = "deleted_date")
+    private LocalDateTime deletedDate;
 
     public int getId() {
         return id;
@@ -67,27 +68,27 @@ public class Category {
         this.products = products;
     }
 
-    public LocalDateTime getCreate_time() {
-        return create_time;
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreate_time(LocalDateTime create_time) {
-        this.create_time = create_time;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public LocalDateTime getUpdate_time() {
-        return update_time;
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUpdate_time(LocalDateTime update_time) {
-        this.update_time = update_time;
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
-    public LocalDateTime getDelete_time() {
-        return delete_time;
+    public LocalDateTime getDeletedDate() {
+        return deletedDate;
     }
 
-    public void setDelete_time(LocalDateTime delete_time) {
-        this.delete_time = delete_time;
+    public void setDeletedDate(LocalDateTime deletedDate) {
+        this.deletedDate = deletedDate;
     }
 }

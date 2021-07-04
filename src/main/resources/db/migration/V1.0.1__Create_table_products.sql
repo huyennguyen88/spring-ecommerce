@@ -6,9 +6,9 @@ CREATE TABLE products (
 	quantity INT NOT NULL,
 	price decimal(15,0) NOT NULL,
 	category_id INT NOT NULL,
-    create_time timestamp default current_timestamp,
-    update_time timestamp default current_timestamp on update current_timestamp,
-    delete_time timestamp null,
+    created_date timestamp default current_timestamp,
+    updated_date timestamp default current_timestamp on update current_timestamp,
+    deleted_date timestamp null,
 	PRIMARY KEY (id),
 	FOREIGN KEY (category_id) REFERENCES categories(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;

@@ -3,7 +3,7 @@ package com.example.springecommerce.controller;
 import com.example.springecommerce.dto.PageDTO;
 import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.entity.User;
-import com.example.springecommerce.form.UserForm;
+import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +61,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/{id}/edit")
-    public ResponseEntity<UserDTO> update(@PathVariable(value = "id") int user_id, @Valid @RequestBody UserForm.Update form) {
-        ResponseEntity<UserDTO> responseEntity = userService.update(user_id, form);
-        return responseEntity;
-    }
+//    @PutMapping("/{id}/edit")
+//    public ResponseEntity<UserDTO> update(@PathVariable(value = "id") int user_id, @Valid @RequestBody UserRegisterForm.Update form) {
+//        ResponseEntity<UserDTO> responseEntity = userService.update(user_id, form);
+//        return responseEntity;
+//    }
 }

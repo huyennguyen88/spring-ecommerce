@@ -1,8 +1,9 @@
 package com.example.springecommerce.service.impl;
 
 import com.example.springecommerce.dto.UserDTO;
+import com.example.springecommerce.dto.response.UserResponseResDto;
 import com.example.springecommerce.entity.User;
-import com.example.springecommerce.form.UserForm;
+import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +53,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     private boolean isDeleted(User user) {
-        return user.getDelete_time()!=null;
+        return user.getDeletedDate()!=null;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             Optional<User> optionalUser = getUserRepository().findById(id);
             if(optionalUser.isPresent() && !isDeleted(optionalUser.get())) {
                 User user = optionalUser.get();
-                user.setDelete_time(LocalDateTime.now());
+                user.setDeletedDate(LocalDateTime.now());
                 getUserRepository().save(user);
                 return true;
             }
@@ -73,25 +74,61 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDTO> update(int user_id, UserForm.Update userForm) {
-        Optional<User> optional = getUserRepository().findById(user_id);
-        if(optional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public boolean isUsernameExist(String username) {
         try {
-            User user = optional.get();
-            user.setFullname(userForm.getFullname());
-            user.setAddress(userForm.getAddress());
-            user.setAvatar(userForm.getAvatar());
-            user.setPhone(userForm.getPhone());
-            User updatedUser = getUserRepository().save(user);
-            UserDTO userDTO = new UserDTO(updatedUser);
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);
-
+            // true: exist
+            User user = getUserRepository().findByUsername(username);
+            return user!=null;
         } catch (Exception e) {
-            logger.error("Error update user");
-            throw (e);
+            logger.error("Error checkin username exist: "+e);
         }
+        return false;
     }
+
+    @Override
+    public boolean isEmailExist(String email) {
+        try {
+            // true: exist
+            User user = getUserRepository().findByEmail(email);
+            return user!=null;
+        } catch (Exception e) {
+            logger.error("Error checkin email exist: "+e);
+        }
+        return false;
+    }
+    @Override
+    public UserResponseResDto create(User user) {
+        try {
+            User newUser = getUserRepository().save(user);
+            UserResponseResDto resDto = new UserResponseResDto(user);
+            return resDto;
+        } catch (Exception e) {
+            logger.error("Error create user: "+e);
+        }
+        return null;
+    }
+
+
+//    @Override
+//    public ResponseEntity<UserDTO> update(int user_id, UserRegisterForm.Update userForm) {
+//        Optional<User> optional = getUserRepository().findById(user_id);
+//        if(optional.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        try {
+//            User user = optional.get();
+//            user.setFullname(userForm.getFullname());
+//            user.setAddress(userForm.getAddress());
+//            user.setAvatar(userForm.getAvatar());
+//            user.setPhone(userForm.getPhone());
+//            User updatedUser = getUserRepository().save(user);
+//            UserDTO userDTO = new UserDTO(updatedUser);
+//            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            logger.error("Error update user");
+//            throw (e);
+//        }
+//    }
 
 }
