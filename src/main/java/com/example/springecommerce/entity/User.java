@@ -2,14 +2,18 @@ package com.example.springecommerce.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Where(clause = "deleted_date is null")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,16 +40,24 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "create_time", updatable = false)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    @Column(name = "created_date", updatable = false)
     @CreationTimestamp
-    private LocalDateTime create_time;
+    private LocalDateTime createdDate;
 
-    @Column(name = "update_time")
+    @Column(name = "updated_date")
     @UpdateTimestamp
-    private LocalDateTime update_time;
+    private LocalDateTime updatedDate;
 
-    @Column(name = "delete_time")
-    private LocalDateTime delete_time;
+    @Column(name = "deleted_date")
+    private LocalDateTime deletedDate;
 
     public int getId() {
         return id;
@@ -111,27 +123,35 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public LocalDateTime getCreate_time() {
-        return create_time;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setCreate_time(LocalDateTime create_time) {
-        this.create_time = create_time;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public LocalDateTime getUpdate_time() {
-        return update_time;
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setUpdate_time(LocalDateTime update_time) {
-        this.update_time = update_time;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public LocalDateTime getDelete_time() {
-        return delete_time;
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setDelete_time(LocalDateTime delete_time) {
-        this.delete_time = delete_time;
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public LocalDateTime getDeletedDate() {
+        return deletedDate;
+    }
+
+    public void setDeletedDate(LocalDateTime deletedDate) {
+        this.deletedDate = deletedDate;
     }
 }
