@@ -5,7 +5,8 @@ import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.entity.User;
 import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    private static final Logger logger = Logger.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;

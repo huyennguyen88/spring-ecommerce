@@ -5,7 +5,8 @@ import com.example.springecommerce.dto.response.UserResponseResDto;
 import com.example.springecommerce.entity.User;
 import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.*;
 @Service
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
-    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public Optional<User> findById(int key) {
         try {
