@@ -7,6 +7,7 @@ import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -101,8 +102,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     public UserResponseResDto create(User user) {
         try {
             User newUser = getUserRepository().save(user);
-            UserResponseResDto resDto = new UserResponseResDto(user);
-            return resDto;
+            return new UserResponseResDto(newUser);
         } catch (Exception e) {
             logger.error("Error create user: "+e);
         }
