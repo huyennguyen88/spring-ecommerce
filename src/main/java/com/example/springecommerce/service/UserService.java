@@ -18,5 +18,4 @@ public interface UserService {
     UserResponseResDto create(User user);
     boolean isUsernameExist(String username);
     boolean isEmailExist(String email);
-//    ResponseEntity<UserDTO> update(int user_id, UserRegisterForm.Update userForm);
 }

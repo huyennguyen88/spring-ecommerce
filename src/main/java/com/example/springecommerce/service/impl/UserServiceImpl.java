@@ -2,24 +2,29 @@ package com.example.springecommerce.service.impl;
 
 import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.dto.response.UserResponseResDto;
+import com.example.springecommerce.entity.Role;
 import com.example.springecommerce.entity.User;
-import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Optional<User> findById(int key) {
         try {
@@ -101,7 +106,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Override
     public UserResponseResDto create(User user) {
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             User newUser = getUserRepository().save(user);
+            Role role = getRoleRepository().findByCode("USER");
+            //Add role
+            newUser.setRoles(List.of(role));
+            role.addUser(newUser);
+            //Save
+            getRoleRepository().save(role);
+            getUserRepository().save(user);
+
             return new UserResponseResDto(newUser);
         } catch (Exception e) {
             logger.error("Error create user: "+e);

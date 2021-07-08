@@ -20,8 +20,10 @@ public class HomeController {
 
     @GetMapping("/welcome")
     public String index(HttpSession session) {
-        List<CategoryResDto> category_roots = categoryDetailService.getRoots();
-        session.setAttribute("roots", category_roots);
+        if(session.getAttribute("roots") == null) {
+            List<CategoryResDto> category_roots = categoryDetailService.getRoots();
+            session.setAttribute("roots", category_roots);
+        }
         return "homes/home";
     }
 }

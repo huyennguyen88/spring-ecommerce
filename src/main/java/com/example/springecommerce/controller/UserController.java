@@ -21,12 +21,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/all")
     public ResponseEntity<PageDTO> index(@RequestParam("page") int page, @RequestParam("size") int size) {

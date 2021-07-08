@@ -69,6 +69,7 @@ public class UserRegisterForm {
         user.setUsername(this.getUsername());
         user.setFullname(this.getFullname());
         user.setEmail(this.getEmail());
+        user.setPassword(this.getPassword());
         return user;
     }
 }
