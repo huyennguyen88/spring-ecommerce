@@ -1,6 +1,7 @@
 package com.example.springecommerce.form.users;
 
 import com.example.springecommerce.entity.User;
+import com.example.springecommerce.validation.EmailConstraint;
 import com.example.springecommerce.validation.PasswordConfirmConstraint;
 
 import javax.validation.constraints.*;
@@ -15,7 +16,7 @@ public class UserRegisterForm {
     private String username;
 
     @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Email should be valid")
+    @EmailConstraint
     private String email;
 
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Minimum eight characters, at least one letter and one number:")

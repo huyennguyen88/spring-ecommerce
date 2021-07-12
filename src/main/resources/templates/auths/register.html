@@ -28,31 +28,31 @@
                                 <div class="form-group">
                                     <label class="col-form-label" th:text="#{fullname}"></label>
                                     <input th:field="*{fullname}" type="text" class="form-control" name="fullname">
-                                    <label th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Fullname Error</label>
+                                    <small class="form-text text-danger font-italic" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Fullname Error</small>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" th:text="#{username}"></label>
                                     <input th:field="*{username}" type="text" class="form-control" name="username" required>
-                                    <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</label>
+                                    <small class="form-text text-danger font-italic" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-email" class="col-form-label">Email</label>
                                     <input th:field="*{email}" type="email"
                                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control"
                                            name="email" id="recipient-email" required>
-                                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</label>
+                                    <small class="form-text text-danger font-italic" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="password1" class="col-form-label" th:text="#{password}"></label>
                                     <input th:field="*{password}" type="password" class="form-control"
                                            name="password" id="password1" required>
-                                    <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</label>
+                                    <small class="form-text text-danger font-italic" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="password2" class="col-form-label" th:text="#{confirm}"></label>
                                     <input th:field="*{confirmPassword}" name="confirmPassword" type="password"
                                            class="form-control" placeholder=" " id="password2" required>
-                                    <label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Confirm Password Error</label>
+                                    <small class="form-text text-danger font-italic" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Confirm Password Error</small>
                                 </div>
                                 <div class="sub-w3l">
                                     <div class="sub-agile">

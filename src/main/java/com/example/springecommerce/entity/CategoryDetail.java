@@ -1,10 +1,15 @@
 package com.example.springecommerce.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "category_details")
+@Getter
+@Setter
 public class CategoryDetail implements Serializable {
 
     @Id
@@ -19,27 +24,4 @@ public class CategoryDetail implements Serializable {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Category getParent() {
-        return parent;
-    }
-
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
 }

@@ -4,12 +4,12 @@ import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.dto.response.UserResponseResDto;
 import com.example.springecommerce.entity.Role;
 import com.example.springecommerce.entity.User;
+import com.example.springecommerce.exception.AlreadyExistException;
+import com.example.springecommerce.exception.TransactionInternalException;
+import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,18 +19,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     public Optional<User> findById(int key) {
         try {
             return getUserRepository().findById(key);
         }catch (Exception e) {
-            logger.error("Error find one user",e);
+            log.error("Error find one user",e);
             return Optional.empty();
         }
     }
@@ -45,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             }
             return userDTOList;
         } catch (Exception e) {
-            logger.error("Error find all user",e);
+            log.error("Error find all user",e);
             return Collections.emptyList();
         }
     }
@@ -75,52 +71,55 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             }
             return false;
         } catch (Exception e) {
-            logger.error("Error deleting user");
+            log.error("Error deleting user");
             throw (e);
         }
     }
 
-    @Override
-    public boolean isUsernameExist(String username) {
+    private boolean isUsernameExist(String username) {
         try {
-            // true: exist
             User user = getUserRepository().findByUsername(username);
             return user!=null;
         } catch (Exception e) {
-            logger.error("Error checkin username exist: "+e);
+            log.error("Error checkin username exist: "+e);
         }
         return false;
     }
 
-    @Override
-    public boolean isEmailExist(String email) {
+    private boolean isEmailExist(String email) {
         try {
-            // true: exist
             User user = getUserRepository().findByEmail(email);
             return user!=null;
         } catch (Exception e) {
-            logger.error("Error checkin email exist: "+e);
+            log.error("Error checkin email exist: "+e);
         }
         return false;
     }
     @Override
-    public UserResponseResDto create(User user) {
+    public UserResponseResDto create(UserRegisterForm userForm) throws AlreadyExistException, TransactionInternalException {
+        if(isUsernameExist(userForm.getUsername())) {
+            throw new AlreadyExistException("There is an account with that email address: "
+                    + userForm.getUsername());
+        }
+        if(isEmailExist(userForm.getEmail())) {
+            throw new AlreadyExistException("Email already existed: "+userForm.getEmail());
+        }
         try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            User user = userForm.toUserEntity();
+            user.setPassword(getPasswordEncoder().encode(user.getPassword()));
             User newUser = getUserRepository().save(user);
             Role role = getRoleRepository().findByCode("USER");
-            //Add role
+            /* Add role */
             newUser.setRoles(List.of(role));
             role.addUser(newUser);
-            //Save
+            /* Save */
             getRoleRepository().save(role);
-            getUserRepository().save(user);
-
+            newUser = getUserRepository().save(user);
             return new UserResponseResDto(newUser);
         } catch (Exception e) {
-            logger.error("Error create user: "+e);
+            log.error("Error create user: server internal exception: "+e);
+            throw new TransactionInternalException("Error create user: server internal exception", e);
         }
-        return null;
     }
 
 

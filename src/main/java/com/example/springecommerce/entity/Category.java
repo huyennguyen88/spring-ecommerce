@@ -1,5 +1,7 @@
 package com.example.springecommerce.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
+@Getter
+@Setter
 public class Category implements Serializable {
 
     @Id
@@ -36,59 +40,4 @@ public class Category implements Serializable {
     @Column(name = "deleted_date")
     private LocalDateTime deletedDate;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<CategoryDetail> getCategoryDetails() {
-        return categoryDetails;
-    }
-
-    public void setCategoryDetails(List<CategoryDetail> categoryDetails) {
-        this.categoryDetails = categoryDetails;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public LocalDateTime getDeletedDate() {
-        return deletedDate;
-    }
-
-    public void setDeletedDate(LocalDateTime deletedDate) {
-        this.deletedDate = deletedDate;
-    }
 }

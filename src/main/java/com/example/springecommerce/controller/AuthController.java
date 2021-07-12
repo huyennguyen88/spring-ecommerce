@@ -1,9 +1,9 @@
 package com.example.springecommerce.controller;
 
-import com.example.springecommerce.dto.response.UserResponseResDto;
+import com.example.springecommerce.exception.AlreadyExistException;
+import com.example.springecommerce.exception.TransactionInternalException;
 import com.example.springecommerce.form.users.UserRegisterForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -18,21 +18,11 @@ import javax.validation.Valid;
 
 @PropertySource("classpath:messages.properties")
 @Controller
+@Slf4j
 public class AuthController extends BaseController {
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-    @Value("${msg_error_username}")
-    private String msg_error_username;
-
-    @Value("${msg_error_email}")
-    private String msg_error_email;
 
     @Value("${msg_success_register}")
     private String msg_success_register;
-
-    @Value("${msg_error_register}")
-    private String msg_error_register;
 
     @Value("${msg_success_login}")
     private String msg_success_login;
@@ -46,7 +36,7 @@ public class AuthController extends BaseController {
     public String loginSuccess(final RedirectAttributes redirectAttributes) {
         String css = "success";
         String msg = msg_success_login;
-        logger.info("Login success");
+        log.info("Login success");
         return handleRedirect(redirectAttributes,css,msg,"/welcome");
     }
 
@@ -58,26 +48,19 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/register-process")
-    public String register(@Valid @ModelAttribute("userForm") UserRegisterForm userForm, BindingResult result, Model model,
+    public String register(@Valid @ModelAttribute("userForm") UserRegisterForm userForm, BindingResult result,
                            final RedirectAttributes redirectAttributes) {
         String css = "error";
-        String msg = msg_error_username;
-
         if (result.hasErrors()) {
             return "auths/register";
-        } else if(userService.isUsernameExist(userForm.getUsername())) {
-            return handleRedirect(redirectAttributes,css,msg,"/register");
-        } else if (userService.isEmailExist(userForm.getEmail())) {
-            msg = msg_error_email;
-            return handleRedirect(redirectAttributes,css,msg,"/register");
         }
-        UserResponseResDto resDto = userService.create(userForm.toUserEntity());
-        if(resDto==null) {
-            msg = msg_error_register;
-            return handleRedirect(redirectAttributes,css,msg,"/register");
+        try {
+            userService.create(userForm);
+        } catch (AlreadyExistException | TransactionInternalException e) {
+            log.error(e.getMessage());
+            return handleRedirect(redirectAttributes,css,e.getMessage(),"/register");
         }
         css = "success";
-        msg = msg_success_register;
-        return handleRedirect(redirectAttributes,css,msg,"/login-page");
+        return handleRedirect(redirectAttributes,css,msg_success_register,"/login-page");
     }
 }
