@@ -1,8 +1,13 @@
 package com.example.springecommerce.service.impl;
 
 import com.example.springecommerce.repository.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Getter
+@Setter
 public class BaseServiceImpl {
     @Autowired
     private UserRepository userRepository;
@@ -19,43 +24,7 @@ public class BaseServiceImpl {
     @Autowired
     private RoleRepository roleRepository;
 
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public ProductRepository getProductRepository() {
-        return productRepository;
-    }
-
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    public CategoryRepository getCategoryRepository() {
-        return categoryRepository;
-    }
-
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
-
-    public CategoryDetailRepository getCategoryDetailRepository() {
-        return categoryDetailRepository;
-    }
-
-    public void setCategoryDetailRepository(CategoryDetailRepository categoryDetailRepository) {
-        this.categoryDetailRepository = categoryDetailRepository;
-    }
-
-    public RoleRepository getRoleRepository() {
-        return roleRepository;
-    }
-
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 }

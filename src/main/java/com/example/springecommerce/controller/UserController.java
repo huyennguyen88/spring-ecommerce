@@ -3,11 +3,6 @@ package com.example.springecommerce.controller;
 import com.example.springecommerce.dto.PageDTO;
 import com.example.springecommerce.dto.UserDTO;
 import com.example.springecommerce.entity.User;
-import com.example.springecommerce.form.users.UserRegisterForm;
-import com.example.springecommerce.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,15 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController extends BaseController{
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/all")
     public ResponseEntity<PageDTO> index(@RequestParam("page") int page, @RequestParam("size") int size) {
@@ -50,7 +42,7 @@ public class UserController extends BaseController{
     @PutMapping("/{id}/delete")
     public ResponseEntity<Object> delete(@PathVariable int id) {
         Optional<User> optionalUser = userService.findById(id);
-        if(!optionalUser.isPresent()) {
+        if(optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if(userService.delete(id)) {

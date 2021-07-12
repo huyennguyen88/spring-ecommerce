@@ -27,15 +27,21 @@
                         </div>
                         <div class="col-md-6">
                             <form th:action="@{/j_spring_security_check}" id="formLogin" method="post">
-                                <div th:if="${param.error}" class="alert alert-danger">
-                                    Wrong username or password
+                                <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> Wrong username or password
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <div th:if="${param.logout}" class="alert alert-warning">
-                                    You have been logged out.
+                                <div th:if="${param.logout}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Warning!</strong> You have been logged out. Please log in again
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <div th:if="${param.accessDenied != null}" class="alert alert-danger">
-                                    You are not authorized
-                                </div>
+<!--                                <div th:if="${param.accessDenied != null}" class="alert alert-danger">-->
+<!--                                    You are not authorized-->
+<!--                                </div>-->
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label" th:text="#{username}"></label>
                                     <input type="text" class="form-control" placeholder="Your username "
