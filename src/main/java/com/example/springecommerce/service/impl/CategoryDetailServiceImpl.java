@@ -21,6 +21,7 @@ public class CategoryDetailServiceImpl extends BaseServiceImpl implements Catego
             for (CategoryDetail categoryDetail : categoryDetails) {
                 categoryResDtos.add(new CategoryResDto(categoryDetail));
             }
+            log.info("Load root done!");
             return categoryResDtos;
 
         } catch (Exception e) {

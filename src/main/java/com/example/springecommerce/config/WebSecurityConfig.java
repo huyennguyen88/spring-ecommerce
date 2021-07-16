@@ -1,6 +1,6 @@
 package com.example.springecommerce.config;
 
-import com.example.springecommerce.service.impl.UserDetailsServiceImpl;
+import com.example.springecommerce.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -47,11 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/welcome", "/login-page", "/logout").permitAll();
 
         //Need login
-        http.authorizeRequests().antMatchers("/users/**","orders/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/users/**","orders/**").access("hasRole('ROLE_USER')");
+        http.authorizeRequests().antMatchers("/admin").permitAll();
 
         //Wrong user access
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/access-denied");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/errors/access-denied");
 
         //Login form config
         http.authorizeRequests().and().formLogin()
@@ -65,6 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Logout Page.
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login-page?logout");
 
+        // Cấu hình remember me, thời gian là 1296000 giây
+        http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(1296000);
+
     }
+
+
 
 }

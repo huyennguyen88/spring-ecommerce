@@ -1,34 +1,44 @@
 package com.example.springecommerce.service.impl;
 
 import com.example.springecommerce.dto.UserDTO;
-import com.example.springecommerce.dto.response.UserResponseResDto;
+import com.example.springecommerce.dto.response.UserResDto;
 import com.example.springecommerce.entity.Role;
 import com.example.springecommerce.entity.User;
 import com.example.springecommerce.exception.AlreadyExistException;
 import com.example.springecommerce.exception.TransactionInternalException;
 import com.example.springecommerce.form.users.UserRegisterForm;
 import com.example.springecommerce.service.UserService;
+import com.example.springecommerce.utils.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
-    public Optional<User> findById(int key) {
+    public UserResDto findById(int key) {
+        UserResDto userResDto;
         try {
-            return getUserRepository().findById(key);
+            Optional<User> optionalUser = getUserRepository().findById(key);
+            if(optionalUser.isPresent()){
+                User user = optionalUser.get();
+                userResDto = getModelMapper().map(user, UserResDto.class);
+
+                LocalDateTime date = userResDto.getCreatedDate();
+                userResDto.setCreateDateString(DateTimeUtils.toDateTimeString(date));
+                log.info("date: "+userResDto.getCreateDateString());
+                return userResDto;
+            }
+
         }catch (Exception e) {
             log.error("Error find one user",e);
-            return Optional.empty();
+            return null;
         }
+        return null;
     }
 
     @Override
@@ -96,7 +106,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return false;
     }
     @Override
-    public UserResponseResDto create(UserRegisterForm userForm) throws AlreadyExistException, TransactionInternalException {
+    public UserResDto create(UserRegisterForm userForm) throws AlreadyExistException, TransactionInternalException {
         if(isUsernameExist(userForm.getUsername())) {
             throw new AlreadyExistException("There is an account with that email address: "
                     + userForm.getUsername());
@@ -105,17 +115,19 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             throw new AlreadyExistException("Email already existed: "+userForm.getEmail());
         }
         try {
-            User user = userForm.toUserEntity();
-            user.setPassword(getPasswordEncoder().encode(user.getPassword()));
+            User user = getModelMapper().map(userForm, User.class);
+            user.setEncryptedPassword(getPasswordEncoder().encode(userForm.getPassword()));
+            user.setCreatedBy(user);
+            user.setUpdatedBy(user);
             User newUser = getUserRepository().save(user);
             Role role = getRoleRepository().findByCode("USER");
             /* Add role */
-            newUser.setRoles(List.of(role));
+            newUser.setRoles(Set.of(role));
             role.addUser(newUser);
             /* Save */
             getRoleRepository().save(role);
             newUser = getUserRepository().save(user);
-            return new UserResponseResDto(newUser);
+            return getModelMapper().map(newUser, UserResDto.class);
         } catch (Exception e) {
             log.error("Error create user: server internal exception: "+e);
             throw new TransactionInternalException("Error create user: server internal exception", e);

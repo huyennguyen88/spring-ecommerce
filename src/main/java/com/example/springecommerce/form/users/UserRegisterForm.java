@@ -3,8 +3,13 @@ package com.example.springecommerce.form.users;
 import com.example.springecommerce.entity.User;
 import com.example.springecommerce.validation.EmailConstraint;
 import com.example.springecommerce.validation.PasswordConfirmConstraint;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.*;
+
+@Getter
+@Setter
 @PasswordConfirmConstraint
 public class UserRegisterForm {
 
@@ -25,52 +30,4 @@ public class UserRegisterForm {
     @NotBlank(message = "Confirm password cannot be blank")
     private String confirmPassword;
 
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    public User toUserEntity() {
-        User user = new User();
-        user.setUsername(this.getUsername());
-        user.setFullname(this.getFullname());
-        user.setEmail(this.getEmail());
-        user.setPassword(this.getPassword());
-        return user;
-    }
 }

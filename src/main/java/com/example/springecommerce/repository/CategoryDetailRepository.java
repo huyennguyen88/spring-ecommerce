@@ -1,6 +1,5 @@
 package com.example.springecommerce.repository;
 
-import com.example.springecommerce.entity.Category;
 import com.example.springecommerce.entity.CategoryDetail;
 import com.example.springecommerce.repository.custom.CategoryDetailRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,6 +3,7 @@ package com.example.springecommerce.service.impl;
 import com.example.springecommerce.repository.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -26,5 +27,8 @@ public class BaseServiceImpl {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 }

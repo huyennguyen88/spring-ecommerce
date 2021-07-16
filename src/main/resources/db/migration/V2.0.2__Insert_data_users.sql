@@ -1,5 +1,0 @@
-INSERT INTO users (fullname, username, email, avatar, phone, address, password) VALUES
-('Nguyễn Phan Nhi','admin','nguyenphannhi@gmail.com','image-avatar-1.jpg',0532057275,'Số 45 đường Hàm Nghi TP Đà Nẵng','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG'),
-('Trần Anh Tú','anhtu','trananhtu@gmail.com','image-avatar-2.jpg',0913436684,'Số 53 đường Võ Văn Kiệt TP Huế','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG'),
-('Đặng Bùi Bảo','buibao','dangbuibao@gmail.com','image-avatar-3.jpg',0652559200,'Số 3 đường Ngô Tất Tố TP Hồ Chí Minh','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG'),
-('Võ Hoàng Yến','hoangyen','vohoangyen@gmail.com','image-avatar-4.jpg',0288545076,'Số 23 đường Nguyễn Huệ TP Hồ Chí Minh','$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG')

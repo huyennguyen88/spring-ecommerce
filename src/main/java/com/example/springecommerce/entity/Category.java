@@ -2,19 +2,16 @@ package com.example.springecommerce.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "categories")
 @Getter
 @Setter
-public class Category implements Serializable {
+public class Category extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +26,12 @@ public class Category implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> products;
 
-    @Column(name = "created_date", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdDate;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
+    private User createdBy;
 
-    @Column(name = "updated_date")
-    @UpdateTimestamp
-    private LocalDateTime updatedDate;
-
-    @Column(name = "deleted_date")
-    private LocalDateTime deletedDate;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updated_by", referencedColumnName = "id")
+    private User updatedBy;
 
 }

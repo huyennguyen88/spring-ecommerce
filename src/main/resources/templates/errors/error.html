@@ -13,12 +13,11 @@
     <div th:replace="fragments/banner/banner-shared :: banner-shared"></div>
     <div>
         <div class="container-fluid">
-
             <!-- 404 Error Text -->
             <div class="text-center">
                 <div class="h1 font-weight-bold text-center" th:text="${code}"></div>
-                <p class="lead text-secondary  h3 mb-5" th:text="${message}">/p>
-                <a th:href="@{/helpers/go-back}">← Back to previous page</a>
+                <p class="text-secondary  h3 mb-5" th:text="${message}"></p>
+                <a th:href="@{/welcome}">← Back to home</a>
             </div>
         </div>
     </div>

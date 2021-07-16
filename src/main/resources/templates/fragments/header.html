@@ -68,7 +68,7 @@
                                                     <a class="dropdown-item"
                                                        th:href="@{/orders}">My orders</a>
                                                     <a class="dropdown-item"
-                                                       th:href="@{/users/{id}(id=${#authentication.getPrincipal().getId()})}"
+                                                       th:href="@{/users/{id}/show(id=${#authentication.getPrincipal().getId()})}"
                                                        th:text="#{profile}"></a>
                                                     <a class="dropdown-item" th:href="@{/logout}"
                                                        th:text="#{logout}"></a>

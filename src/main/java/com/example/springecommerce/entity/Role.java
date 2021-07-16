@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -22,7 +22,7 @@ public class Role {
     private String code;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<User> users;
+    private Set<User> users;
 
     public void addUser(User user) {
         this.users.add(user);

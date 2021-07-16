@@ -1,7 +1,7 @@
-package com.example.springecommerce.service.impl;
+package com.example.springecommerce.security;
 
 import com.example.springecommerce.entity.User;
-import com.example.springecommerce.security.MyUserDetails;
+import com.example.springecommerce.service.impl.BaseServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

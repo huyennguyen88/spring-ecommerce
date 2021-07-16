@@ -3,21 +3,18 @@ package com.example.springecommerce.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product implements Serializable {
+public class Product extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,15 +41,12 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(name = "created_date", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdDate;
+    @OneToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
+    private User createdBy;
 
-    @Column(name = "updated_date")
-    @UpdateTimestamp
-    private LocalDateTime updatedDate;
-
-    @Column(name = "deleted_date")
-    private LocalDateTime deletedDate;
+    @OneToOne
+    @JoinColumn(name = "updated_by", referencedColumnName = "id")
+    private User updatedBy;
 
 }

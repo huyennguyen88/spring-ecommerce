@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<!-- sidebar-->
+<div th:fragment="sidebar">
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-secondary text-muted h4">Activity
+      <i class="fa fa-dashboard fa-1x"></i>
+    </li>
+    <li>
+      <a th:href="@{/users/{id}/show(id=${#authentication.getPrincipal().getId()})}"
+         class="list-group-item list-group-item-action list-group-item-light  text-left">
+        <span class="pull-left"><strong>My Account</strong></span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/orders}" class="list-group-item list-group-item-action list-group-item-light  text-left">
+        <span class="pull-left"><strong>Orders</strong></span>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- //sidebar -->
+</body>
+
+</html>

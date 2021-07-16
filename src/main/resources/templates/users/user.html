@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout.html}">
+
+<head>
+    <!--/*  Title will be replaced by their respective titles in the calling template. */-->
+    <title>User Detail</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <!-- user content -->
+    <div id="userContent">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div th:replace="fragments/sidebar :: sidebar"></div>
+                </div>
+                <div class="card w-75">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="h4">User Information</div>
+                            <div class="row">
+                                <p class="col-5">
+                                    <small class="text-secondary">Updated at</small>
+                                    <span>:</span>
+                                </p>
+                                <small th:text="${user.createDateString}" class="col-7 text-black"></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">
+                                <div th:if="${user != null}">
+                                    <div class="row pb-2">
+                                        <p class="col-4">
+                                            <span>Fullname</span>
+                                            <span>:</span>
+                                        </p>
+                                        <div class="col-8" th:text="${user.fullname}"></div>
+                                    </div>
+                                    <div class="row pb-2">
+                                        <p class="col-4">
+                                            <span>Username</span>
+                                            <span>:</span>
+                                        </p>
+                                        <div class="col-8" th:text="${user.username}"></div>
+                                    </div>
+                                    <div class="row pb-2">
+                                        <p class="col-4">
+                                            <span>Email</span>
+                                            <span>:</span>
+                                        </p>
+                                        <div class="col-8" th:text="${user.email}"></div>
+                                    </div>
+                                    <div class="row pb-2">
+                                        <p class="col-4">
+                                            <span>Phone number</span>
+                                            <span>:</span>
+                                        </p>
+                                        <div class="col-8" th:text="${user.phone}"></div>
+                                    </div>
+                                    <div class="row pb-2">
+                                        <p class="col-4">
+                                            <span>Address</span>
+                                            <span>:</span>
+                                        </p>
+                                        <div class="col-8" th:text="${user.address}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-end">
+                            <a th:href="@{/users/{id}/delete(id=${user.id})}" role="button" class="btn btn-danger">Delete</a>
+                            <a th:href="@{/users/{id}/edit(id=${user.id})}" role="button" class="btn btn-info mx-2">Edit</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- user content -->
+</section>
+</body>
+
+</html>

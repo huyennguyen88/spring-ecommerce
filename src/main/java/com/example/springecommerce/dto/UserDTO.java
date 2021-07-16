@@ -15,13 +15,11 @@ public class UserDTO extends AbstractDTO<User> {
     private String email;
     private String avatar;
     private String phone;
-    private String address;
 
     public UserDTO(User user) {
         this.id = user.getId();
         this.fullname = user.getFullname();
         this.username = user.getUsername();
-        this.address = user.getAddress();
         this.avatar = user.getAvatar();
         this.email = user.getEmail();
         this.phone = user.getPhone();

@@ -3,14 +3,11 @@ package com.example.springecommerce.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -18,7 +15,7 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -38,29 +35,27 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "encrypted_password")
+    private String encryptedPassword;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "gender")
+    private int gender;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
+    private User createdBy;
+
+    @OneToOne
+    @JoinColumn(name = "updated_by", referencedColumnName = "id")
+    private User updatedBy;
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
-
-    @Column(name = "created_date", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdDate;
-
-    @Column(name = "updated_date")
-    @UpdateTimestamp
-    private LocalDateTime updatedDate;
-
-    @Column(name = "deleted_date")
-    private LocalDateTime deletedDate;
+    private Set<Role> roles;
 
 }

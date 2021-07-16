@@ -1,59 +1,53 @@
 package com.example.springecommerce.controller;
 
-import com.example.springecommerce.dto.PageDTO;
-import com.example.springecommerce.dto.UserDTO;
-import com.example.springecommerce.entity.User;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.example.springecommerce.dto.response.UserResDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Optional;
-
-@RestController
+@Slf4j
 @RequestMapping("/users")
+@Controller
 public class UserController extends BaseController{
 
-    @GetMapping("/all")
-    public ResponseEntity<PageDTO> index(@RequestParam("page") int page, @RequestParam("size") int size) {
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setPage(page);
-        Pageable pageable = PageRequest.of(page-1, size, Sort.by("create_time").descending());
-        List<UserDTO> users = userService.findAll(pageable);
-        pageDTO.setListResult(users);
-        pageDTO.setTotalPage((int) Math.ceil((double) (userService.getSize()) / size));
-        return new ResponseEntity<>(pageDTO, HttpStatus.OK);
+//    @GetMapping("/all")
+//    public ResponseEntity<PageDTO> index(@RequestParam("page") int page, @RequestParam("size") int size) {
+//        PageDTO pageDTO = new PageDTO();
+//        pageDTO.setPage(page);
+//        Pageable pageable = PageRequest.of(page-1, size, Sort.by("create_time").descending());
+//        List<UserDTO> users = userService.findAll(pageable);
+//        pageDTO.setListResult(users);
+//        pageDTO.setTotalPage((int) Math.ceil((double) (userService.getSize()) / size));
+//        return new ResponseEntity<>(pageDTO, HttpStatus.OK);
+//    }
+
+    @GetMapping("/{id}/show")
+    public String show(@PathVariable("id") int id, Model model) {
+        if(isRightPerson(id)) {
+            return "redirect:/errors/access-denied";
+        }
+        UserResDto userResDto = userService.findById(id);
+        model.addAttribute("user", userResDto);
+        return "users/user";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> show(@PathVariable int id) {
-        Optional<User> optionalUser = userService.findById(id);
-        if(optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            UserDTO userDTO = new UserDTO(user);
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model) {
+        if(isRightPerson(id)) {
+            return "redirect:/errors/access-denied";
         }
-        return new ResponseEntity<> (HttpStatus.NOT_FOUND);
+        UserResDto userResDto = userService.findById(id);
+        model.addAttribute("user", userResDto);
+        return "users/edit-form";
     }
-
-    @PutMapping("/{id}/delete")
-    public ResponseEntity<Object> delete(@PathVariable int id) {
-        Optional<User> optionalUser = userService.findById(id);
-        if(optionalUser.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if(userService.delete(id)) {
-            return new ResponseEntity<>("Success delete user",HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-//    @PutMapping("/{id}/edit")
-//    public ResponseEntity<UserDTO> update(@PathVariable(value = "id") int user_id, @Valid @RequestBody UserRegisterForm.Update form) {
-//        ResponseEntity<UserDTO> responseEntity = userService.update(user_id, form);
-//        return responseEntity;
+//
+//    @PutMapping("/{id}/update")
+//    public String update(@PathVariable("id") int id, Model model, UserResDto user,
+//                         BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+//
+//
 //    }
 }

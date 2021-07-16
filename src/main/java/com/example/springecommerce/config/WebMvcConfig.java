@@ -1,5 +1,6 @@
 package com.example.springecommerce.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
         localeInterceptor.setParamName("lang");
         registry.addInterceptor(localeInterceptor).addPathPatterns("/*");
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 }

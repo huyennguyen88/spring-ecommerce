@@ -36,7 +36,6 @@ public class AuthController extends BaseController {
     public String loginSuccess(final RedirectAttributes redirectAttributes) {
         String css = "success";
         String msg = msg_success_login;
-        log.info("Login success");
         return handleRedirect(redirectAttributes,css,msg,"/welcome");
     }
 
