@@ -14,8 +14,8 @@ public class HomeController extends BaseController {
 
     @GetMapping("/welcome")
     public String index(HttpSession session) {
-        List<CategoryResDto> category_roots = (List<CategoryResDto>) session.getAttribute("roots");
-        if(category_roots.isEmpty()) {
+        Object category_roots = session.getAttribute("roots");
+        if(category_roots==null) {
             category_roots = categoryDetailService.getRoots();
             session.setAttribute("roots", category_roots);
         }
